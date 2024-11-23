@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text-center">
+    <h1>Find Your Favorite Movies</h1>
+    <form method="POST" class="mb-4">
+        <input type="text" name="movie_title" class="form-control mb-3" placeholder="Enter a movie title" style="border: 2px solid var(--primary-color);">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    {% if movies %}
+    <div class="row">
+        {% for movie in movies %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" class="card-img-top" alt="{{ movie.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text" style="color: var(--secondary-color);">{{ movie.overview | truncate(100) }}</p>
+                    <a href="{{ url_for('main.recommendations', movie_id=movie.id) }}" class="btn btn-primary">Get Recommendations</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
